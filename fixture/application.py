@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from fixture.session import SessionHelper
 from fixture.navigation import NavigationHelper
 from fixture.forms import FormsHelper
@@ -22,11 +25,19 @@ class Application:
         self.navigation = NavigationHelper(self)
         self.actionchaince = ActionChains
         self.config = config
+
         self.base_url = config['web']['baseURL']
+
+    def wait(self,element):
+        wd = self.wd
+        wait = WebDriverWait(wd, 5)
+        wait.until(EC.element_to_be_clickable((By.XPATH,"%s" % element)))
+
 
     def open_home_page(self):
         wd = self.wd
         wd.get(self.base_url)
+
 
     def destroy(self):
         self.wd.quit()

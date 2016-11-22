@@ -1,3 +1,5 @@
+import time
+
 class SessionHelper:
     def __init__(self, app):
         self.app = app
@@ -11,6 +13,8 @@ class SessionHelper:
         wd.find_element_by_name("WebLogin$Password").clear()
         wd.find_element_by_name("WebLogin$Password").send_keys(password)
         wd.find_element_by_name("WebLogin$Login").click()
+        time.sleep(0.5)
+
 
     def logout(self):
         wd = self.app.wd
@@ -22,7 +26,6 @@ class SessionHelper:
 
 
     def ensure_logout(self):
-        wd = self.app.wd
         if self.is_logged_in():
             self.logout()
 
